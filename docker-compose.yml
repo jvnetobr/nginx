@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: "site-exemplo"
+    image: jvnetobr/nginx:1.0
+    #depends_on:
+     # - db
+    restart: always
+    #env_file:
+    #  - ./.env
+    volumes:
+        - ./data:/var/www/html
