@@ -1,5 +1,12 @@
 version: '3'
 
+networks:
+  # enable connection with Traefik
+  traefik:
+    external: true
+  # network for the app
+  apps-network:
+
 services:
   nginx:
     container_name: "site-exemplo"
@@ -11,3 +18,22 @@ services:
     #  - ./.env
     volumes:
         - ./data:/var/www/html
+    networks:
+      - traefik
+      - apps-network
+    labels:
+      # The labels are usefull for Traefik only
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      # Get the routes from http
+      - "traefik.http.routers.site-exemplo.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.site-exemplo.entrypoints=web"
+      # Redirect these routes to https
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.site-exemplo.middlewares=redirect-to-https@docker"
+      # Get the routes from https
+      - "traefik.http.routers.site-exemplo-secured.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.site-exemplo-secured.entrypoints=web-secure"
+      # Apply autentificiation with http challenge
+#      - "traefik.http.routers.site-exemplo-secured.tls=true"
+#      - "traefik.http.routers.site-exemplo-secured.tls.certresolver=myhttpchallenge"
