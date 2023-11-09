@@ -14,8 +14,8 @@ services:
     #depends_on:
      # - db
     restart: always
-    #env_file:
-    #  - ./.env
+    env_file:
+      - ./.env
     volumes:
         - ./data:/var/www/html
     networks:
@@ -35,5 +35,5 @@ services:
       - "traefik.http.routers.site-exemplo-secured.rule=Host(`${DOMAIN}`)"
       - "traefik.http.routers.site-exemplo-secured.entrypoints=web-secure"
       # Apply autentificiation with http challenge
-#      - "traefik.http.routers.site-exemplo-secured.tls=true"
-#      - "traefik.http.routers.site-exemplo-secured.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.site-exemplo-secured.tls=true"
+      - "traefik.http.routers.site-exemplo-secured.tls.certresolver=myhttpchallenge"
