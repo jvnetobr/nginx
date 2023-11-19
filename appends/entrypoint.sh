@@ -32,10 +32,7 @@ if [ ! -d $NGINX_DOCUMENT_ROOT ]; then
     mkdir -p $NGINX_DOCUMENT_ROOT && \
     echo -e "<html><h3>server on...</h3></html>" > $NGINX_STATICS_DIR/index.html && \
     ln -sf $NGINX_STATICS_DIR/index.html $NGINX_STATICS_DIR/index.htm && \
-    mv /root/favicon.ico $NGINX_STATICS_DIR/favicon.ico && \
-    ln -sf $NGINX_STATICS_DIR/favicon.ico $NGINX_DOCUMENT_ROOT/favicon.ico && \
-    ln -sf $NGINX_STATICS_DIR/index.html $NGINX_DOCUMENT_ROOT/index.html && \
-    ln -sf $NGINX_STATICS_DIR/index.html $NGINX_DOCUMENT_ROOT/index.htm;
+    mv /root/favicon.ico $NGINX_STATICS_DIR/favicon.ico;
 fi
 
 if [ $NGINX_FIX_DOCUMENT_ROOT_PERMISSIONS == "on" ];then
